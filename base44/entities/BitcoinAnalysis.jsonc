@@ -1,0 +1,99 @@
+{
+  "name": "BitcoinAnalysis",
+  "type": "object",
+  "properties": {
+    "asset": {
+      "type": "string",
+      "enum": [
+        "BTC",
+        "ETH",
+        "SOL",
+        "GOLD"
+      ],
+      "default": "BTC",
+      "description": "Which asset this analysis is for (BTC, ETH, SOL, or GOLD via PAXG)"
+    },
+    "price": {
+      "type": "number",
+      "description": "Current asset price in USD at time of analysis"
+    },
+    "price_change_24h": {
+      "type": "number",
+      "description": "24h price change percentage"
+    },
+    "signal": {
+      "type": "string",
+      "enum": [
+        "strong_buy",
+        "buy",
+        "hold",
+        "sell",
+        "strong_sell"
+      ],
+      "default": "hold",
+      "description": "Trading signal recommendation"
+    },
+    "buy_confidence": {
+      "type": "number",
+      "description": "Confidence percentage (0-100) that it's a good time to buy"
+    },
+    "sell_confidence": {
+      "type": "number",
+      "description": "Confidence percentage (0-100) that it's a good time to sell"
+    },
+    "pattern_similarity": {
+      "type": "number",
+      "description": "How similar (0-100) current price action is to matched historical years"
+    },
+    "matched_years": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Years whose price patterns most resemble the current market"
+    },
+    "matched_year_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string"
+          },
+          "similarity": {
+            "type": "number"
+          },
+          "outcome_30d": {
+            "type": "number",
+            "description": "Price change % in the 30 days following the matched period"
+          },
+          "outcome_90d": {
+            "type": "number",
+            "description": "Price change % in the 90 days following the matched period"
+          }
+        }
+      },
+      "description": "What happened after similar historical patterns"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Human-readable analysis summary explaining the signal"
+    },
+    "news_rationale": {
+      "type": "string",
+      "description": "LLM-generated explanation of why the asset is rising/falling based on current world news"
+    },
+    "analysis_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this analysis was generated"
+    }
+  },
+  "required": [
+    "price",
+    "signal",
+    "buy_confidence",
+    "sell_confidence",
+    "analysis_date"
+  ]
+}
